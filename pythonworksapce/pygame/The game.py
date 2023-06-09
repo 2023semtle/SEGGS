@@ -36,6 +36,16 @@ enemy_height = enemy_size[1]
 enemy_x_pos = (screen_width/2) - (enemy_width/2)
 enemy_y_pos = (screen_height/2) - (enemy_height/2)
 
+#폰트 정의
+game_font = pygame.font.Font(None, 40)
+
+#시간
+total_time = 10
+
+#시작 시간 계산
+start_ticks = pygame.time.get_ticks()
+
+
 running = True
 while running:
 
@@ -77,9 +87,18 @@ while running:
         green_ch_y_pos = screen_height - green_ch_height
 
     #충돌처리
-    
-    
-        
+    green_ch_rect = green_ch.get_rect()
+    green_ch_rect.left = green_ch_x_pos
+    green_ch_rect.top =  green_ch_y_pos
+
+    enemy_rect = enemy.get_rect()
+    enemy_rect.left = enemy_x_pos
+    enemy_rect.top =  enemy_y_pos
+
+    #충돌체크
+    if green_ch_rect.colliderect(enemy_rect):
+        print("충돌함")
+        running = False
 
     screen.blit(background, (0,0))
 
@@ -87,7 +106,21 @@ while running:
     
     screen.blit(enemy, (enemy_x_pos, enemy_y_pos))
 
+    #타이머
+    elapsed_time = (pygame.time.get_ticks() - start_ticks) / 1000
+    timer = game_font.render(str(int(total_time - elapsed_time)),True,(255,255,255))
+
+    #출력할 글자
+    screen.blit(timer,(10,10))
+
+    if total_time - elapsed_time <= 0:
+        print("타임아웃")
+        running = False
+
+
+
     pygame.display.update()
         
+pygame.time.delay(2000)
 
 pygame.quit()
