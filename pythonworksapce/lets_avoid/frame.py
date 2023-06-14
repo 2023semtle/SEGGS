@@ -26,6 +26,9 @@ character_xpos = (screen_width/2) - (character_width/2)
 character_ypos = screen_height -  character_height
 
 #이동좌표
+x = 0
+y = 0
+
 
 running = True
 while running:
