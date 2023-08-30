@@ -21,15 +21,25 @@ player = pygame.transform.scale(player, (128,128))
 player_X = screen_width/2
 player_Y = screen_height - 128
 fire = False
-ball_Y = 0
+ball_Y = 5
 ballXY = []
+global i
+i = 0
+
+j = 0
+On = False
 
 bg = pygame.image.load("images/bg.jpg")
 bg = pygame.transform.scale(bg, (720,960))
 
-ball = pygame.image.load("images/ball.png")
-ball = pygame.transform.scale(ball, (128,64))
-ball = pygame.transform.rotate(ball, -90)
+def ball_fire():
+    global i
+    ball = pygame.image.load("images/ball.png")
+    ball = pygame.transform.scale(ball, (128,64))
+    ball = pygame.transform.rotate(ball, -90)
+    ballXY.append([player_X + 32,player_Y - 128])
+    On = True
+    i += 1
 
 '''enemy = pygame.image.load('images/enemy')
 enemy = pygame.transform.scale(enemy, (64,64))'''
@@ -52,8 +62,9 @@ while running:
         if event.type == pygame.QUIT:
             running = False
     
-    #게임캐릭터 위치정의
-
+    #배경그리기
+    screen.blit(bg, (0,0))
+    screen.blit(player, (player_X,player_Y))
     
 
     #충돌처리
@@ -69,14 +80,15 @@ while running:
     elif player_X < 0:
         player_X = 0
 
-    #배경그리기
-    screen.blit(bg, (0,0))
-    screen.blit(player, (player_X,player_Y))
     #미사일 발사
     if fire == True:
-        ballXY.append([player_X + 32,player_Y - 128])
-        screen.blit(ball, (ballXY[0][0], ballXY[0][1] - ball_Y))
-        ball_Y += 5
+        ball_fire()
+
+    if On == True:
+        for j in range(i+1):
+            ballXY[j][1] = -100
+            screen.blit(ball, (ballXY[j][0], ballXY[j][1]))
+
 
     pygame.display.update()
 
