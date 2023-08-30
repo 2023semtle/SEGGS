@@ -56,13 +56,17 @@ while running:
         player_X -= 20
     elif key[pygame.K_RIGHT]:
         player_X += 20
-    if key[pygame.K_SPACE]:
-        fire = True
 
     #이벤트 처리
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                fire = True
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_SPACE:
+                fire = False
     
     #배경그리기
     screen.blit(bg, (0,0))
