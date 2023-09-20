@@ -43,8 +43,11 @@ def ball_fire():
     On = True
     i += 1
 
-'''enemy = pygame.image.load('images/enemy')
-enemy = pygame.transform.scale(enemy, (64,64))'''
+enemy = pygame.image.load('images/enemy.png')
+enemy = pygame.transform.scale(enemy, (64,64))
+
+enemy_X = 0
+enemy_speed = 10
 
 running = True
 while running:
@@ -71,9 +74,7 @@ while running:
     #배경그리기
     screen.blit(bg, (0,0))
     screen.blit(player, (player_X,player_Y))
-    
-
-    #충돌처리
+    screen.blit(enemy, (enemy_X,0))
 
     #세로
     if player_Y > screen_height - 128:
@@ -95,6 +96,17 @@ while running:
         for j in range(0, i):
             ballXY[j][1] -= 10
             screen.blit(ball, (ballXY[j][0], ballXY[j][1]))
+
+    #적 움직임 구현
+    if enemy_X <= 0:
+        enemy_speed = 10
+    elif enemy_X >= 720 - 64:
+        enemy_speed = -10
+    enemy_X += enemy_speed
+
+    #충돌처리
+    for k in range(0,i):
+        if ballXY[k][0]
 
 
     pygame.display.update()
